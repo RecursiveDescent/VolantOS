@@ -1,0 +1,12 @@
+export func work malloc(s: size_t) *void {
+    return cast(*void)$malloc(s);
+}
+export func work realloc(ptr: *void, s: size_t) *void {
+    return cast(*void)$realloc(ptr, s);
+}
+export func work calloc(el_size: size_t, el_num: size_t) *void {
+    return cast(*void)$calloc(el_size, el_num);
+}
+export func work free(ptr: *void) {
+    $free(ptr);
+}

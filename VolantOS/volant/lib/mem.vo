@@ -1,0 +1,25 @@
+export func work copy(dest: *void, src: *void, length: size_t) *void {
+    l, r := cast(*u8)dest, cast(*u8)src; 
+    for i: size_t = 0; i < length; ++i {
+        l[i] = r[i]; 
+    }
+    return dest;
+}
+
+export func work compare(first: *void, second: *void, length: size_t) i8 {
+    l, r := cast(*u8)first, cast(*u8)second;
+    for length != 0 && *l == *r {
+        --length;
+        ++l;
+        ++r;
+    }
+    return length ? cast(i8)(*l-*r) : 0;
+}
+
+export func work set(ptr: *void, char: u8, length: size_t) *void {
+    l := cast(*u8)ptr;
+    for i: size_t = 0; i < length; ++i {
+        l[i] = char;
+    }
+    return ptr;
+}
