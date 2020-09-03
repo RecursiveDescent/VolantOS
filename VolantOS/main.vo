@@ -1,0 +1,79 @@
+import "heap.vo";
+
+func fact(i: i32) i32 {
+	if i == 1 {
+		return 1;
+	}
+
+	return i * fact(i - 1);
+}
+
+func revstr(str: *i8, len: i32) *i8 {
+	created: *i8 = cast(*i8) heap.malloc(len);
+
+	ci: i32 = 0;
+
+	for i := len - 1; i >= 0; i-- {
+		created[ci] = str[i];
+		ci++;
+	}
+
+	return created;
+}
+
+func itos(number: i32) *i8 {
+	buf: *i8 = cast(*i8) heap.malloc(1);
+	size: i32 = 1;
+
+	tmp: i32 = number;
+	
+	for i := 0; tmp > 1; i++ {
+		buf[i] = tmp % 10 + '0';
+
+		tmp = tmp / 10;
+
+		size++;
+
+		buf = heap.realloc(buf, size);
+	}
+
+	reversed: *i8 = revstr(buf, size - 1);
+
+	heap.free(buf);
+
+	return reversed;
+}
+
+struct Test {
+	a: i32 = 5;
+};
+
+func writeat(fb: *u8, c: u8, i: i32) i32 {
+	fb[2 * i] = c;
+	fb[2 * i + 1] = 0x15;
+}
+
+func main() i32 {
+	framebuffer: *u8 = cast(*u8) 0x000B8000;
+
+	str: *u8;
+
+	str[0] = 'H';
+	str[1] = 'e';
+	str[2] = 'l';
+	str[3] = 'l';
+	str[4] = 'o';
+	str[5] = ' ';
+	str[6] = 'W';
+	str[7] = 'o';
+	str[8] = 'r';
+	str[9] = 'l';
+	str[10] = 'd';
+	str[11] = '!';
+
+	for i := 0; i < 12; i++ {
+		writeat(framebuffer, str[i], i);
+	}
+
+	return 0;
+}
